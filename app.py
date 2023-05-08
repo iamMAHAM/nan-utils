@@ -19,7 +19,7 @@ for course in courses:
             # if section is a file go to next iteration
             if (section.is_file()):
                 continue
-            renamed_section = renamed_course / section.name
+            renamed_section = renamed_course / section.name.replace('.', '-')
             renamed_section.mkdir(exist_ok=True)
 
             # iterate the files in the section folder
@@ -34,11 +34,14 @@ for course in courses:
                             rank, f'00{i + 1}' if i + 1 < 10 else f'0{i + 1}' if i + 1 < 100 else f'{i + 1}')
 
                         # rename the video
-                        shutil.copy(video, renamed_section / video_name)
+                        shutil.copy(video, renamed_section /
+                                    video_name.replace('-', ''))
                         continue
-                    shutil.copy(video, renamed_section / video.name)
+                    shutil.copy(video, renamed_section /
+                                video.name.replace('-', ''))
                 else:
-                    shutil.copytree(video, renamed_section / video.name)
+                    shutil.copytree(video, renamed_section /
+                                    video.name.replace('-', ''))
 
     except FileExistsError:
         print('file already exists')
