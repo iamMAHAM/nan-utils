@@ -15,16 +15,22 @@ for course in courses:
     renamed_course = renamed / course.name
     renamed_course.mkdir(exist_ok=True)
     try:
-        for section in course.iterdir():
+        sections_list = list(filter(lambda x: x.is_dir(), course.iterdir()))
+
+        print(list(map(lambda s: s.name, sections_list)))
+        for i in range(len(sections_list)):
+            section = sections_list[i]
             # if section is a file go to next iteration
             if (section.is_file()):
                 continue
+
             renamed_section = renamed_course / section.name.replace('.', '-')
             renamed_section.mkdir(exist_ok=True)
 
             # iterate the files in the section folder
-            for i in range(len(list(section.iterdir()))):
-                video = list(section.iterdir())[i]
+            videos_list = list(section.iterdir())
+            for i in range(len(videos_list)):
+                video = videos_list[i]
                 if (video.is_file()):
                     rank_s = re.search(r'^\d+', video.name)
                     if (rank_s is not None):
@@ -38,12 +44,11 @@ for course in courses:
 
                         # check if the video name has a rank in the beginning and it's the same as right rank
                         new_rank = re.search(r'^\d+', tmp)
-
-                        # if ('Formation Node' in course.name):
-                        #     print('Formation Node : ',
-                        #           right_rank, new_rank.group())
-                        video_name = tmp.replace(
-                            new_rank.group(0), right_rank) if new_rank != right_rank else tmp
+                        if (new_rank):
+                            video_name = tmp.replace(
+                                new_rank.group(0), right_rank) if new_rank.group(0) != right_rank else tmp
+                        else:
+                            video_name = tmp
                         # rename the video
                         shutil.copy(video, renamed_section /
                                     (video_name.replace('414 - ', '').replace('-', '').replace('.', '_') + video.suffix))
