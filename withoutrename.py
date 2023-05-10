@@ -51,7 +51,7 @@ for course in courses:
                             video_name = tmp
                         # rename the video
                         shutil.copy(video, renamed_section /
-                                    (video_name.replace('414 - ', '').replace('-', '').replace('.', '_') + video.suffix))
+                                    (video_name.replace('414 - ', '').replace('-', '').replace('.', '') + video.suffix))
                         continue
                     # if rank is none just copy the video
                     shutil.copy(video, renamed_section /
