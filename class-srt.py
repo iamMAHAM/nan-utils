@@ -7,5 +7,4 @@ for course in courses:
         for file in section.iterdir():
             if file.suffix == '.srt' and not file.stem.endswith('_en'):
                 print(file.stem, file.suffix)
-                f = file.rename(f'{file.parent}/{file.stem}_en.srt')
-                print(f)
+                file.rename(f'{file.parent}/{file.stem}_en.srt')
