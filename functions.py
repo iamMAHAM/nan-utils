@@ -63,3 +63,12 @@ def sort_by_rank(strings: List[Path]) -> List[Path]:
     # Utiliser la fonction de clé personnalisée pour trier les chaînes
     sorted_strings = sorted(strings, key=key_func)
     return sorted_strings
+
+
+def only_dirs(path: Union[str, Path]) -> List[Path]:
+    """
+    get only the directories in a path
+    """
+    if (isinstance(path, str)):
+        path = Path(path)
+    return list(filter(lambda c: c.is_dir(), path.iterdir()))
