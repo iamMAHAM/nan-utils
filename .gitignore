@@ -5,3 +5,8 @@ Coder*
 *renamed
 *.tmp
 env/
+venv
+*.csv
+*.xlsx
+*.xls
+*.rtf
